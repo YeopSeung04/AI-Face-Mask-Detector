@@ -5,19 +5,21 @@ from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtWidgets import *
 
 import os
-import data
+# import data
 import main
 
 
 class LoadDataWorker(QThread):
     finished = pyqtSignal()
 
-    def run(self):
-        if not os.path.exists('data/without_mask'):
-            data.download_image('without_mask')
-        if not os.path.exists('data/with_mask'):
-            data.generate_data()
-        self.finished.emit()
+    # def run(self):
+    #     if not os.path.exists('data/without_mask'):
+    #         pass
+    #         # data.download_image('without_mask')
+    #     if not os.path.exists('data/with_mask'):
+    #         pass
+    #         # data.generate_data()
+    #     self.finished.emit()
 
 
 class LoadVideoWorker(QThread):
@@ -139,7 +141,9 @@ class FaceMaskDetector(QMainWindow):
 
 
 if __name__ == '__main__':
+    print(1)
     import sys
+    print(1)
     app = QApplication(sys.argv)
     player = FaceMaskDetector()
     sys.exit(app.exec_())

@@ -15,7 +15,8 @@ face_mask_recognition_model = cv2.dnn.readNet(
 
 mask_detector_model = tf.keras.models.load_model('../models/mymodel')
 
-cap = cv2.VideoCapture('../data/04.mp4')
+# cap = cv2.VideoCapture('../data/04.mp4')
+cap = cv2.VideoCapture(0)
 
 while cap.isOpened():
     ret, image = cap.read()

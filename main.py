@@ -3,6 +3,7 @@ import cv2
 import os
 import ai
 
+
 # 영상 처리
 def video_processing(video_path, background):
     face_mask_recognition_model = cv2.dnn.readNet(

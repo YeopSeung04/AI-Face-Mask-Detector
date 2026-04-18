@@ -1,85 +1,84 @@
 # 데이터 파트
 from urllib.request import Request, urlopen
-import json
-import os
-
+import json, os
 import face_recognition
+print(1)
 from PIL import Image, ImageDraw
 import numpy as np
 
 
 # 다운로드 기능(without_mask, with_mask, mask)
-def download_image(kind):
-    if kind == 'without_mask':
-        api_url = 'https://api.github.com/repos/prajnasb/observations/contents/experiements/data/without_mask?ref=master'
-        hds = {'User-Agent': 'Mozilla/5.0'}
-
-        request = Request(api_url, headers=hds)
-        response = urlopen(request)
-        directory_bytes = response.read()
-        directory_str = directory_bytes.decode('utf-8')
-
-        contents = json.loads(directory_str)
-
-        for i in range(len(contents)):
-            content = contents[i]
-
-            request = Request(content['download_url'])
-            response = urlopen(request)
-            image_data = response.read()
-
-            if not os.path.exists('data'):
-                os.mkdir('data')
-            if not os.path.exists('data/without_mask'):
-                os.mkdir('data/without_mask')
-
-            image_file = open('data/without_mask/' + content['name'], 'wb')
-            image_file.write(image_data)
-            image_file.close()
-            print('without_mask 이미지 다운로드 중(' + str(i + 1) + '/' + str(len(contents)) + '): ' + content['name'])
-        print('without_mask 이미지 다운로드 완료')
-    elif kind == 'with_mask':
-        api_url = 'https://api.github.com/repos/prajnasb/observations/contents/experiements/data/with_mask?ref=master'
-        hds = {'User-Agent': 'Mozilla/5.0'}
-
-        request = Request(api_url, headers=hds)
-        response = urlopen(request)
-        directory_bytes = response.read()
-        directory_str = directory_bytes.decode('utf-8')
-
-        contents = json.loads(directory_str)
-
-        for i in range(len(contents)):
-            content = contents[i]
-
-            request = Request(content['download_url'])
-            response = urlopen(request)
-            image_data = response.read()
-
-            if not os.path.exists('data'):
-                os.mkdir('data')
-            if not os.path.exists('data/with_mask'):
-                os.mkdir('data/with_mask')
-
-            image_file = open('data/with_mask/' + content['name'], 'wb')
-            image_file.write(image_data)
-            image_file.close()
-            print('with_mask 이미지 다운로드 중(' + str(i + 1) + '/' + str(len(contents)) + '): ' + content['name'])
-        print('with_mask 이미지 다운로드 완료')
-    elif kind == 'mask':
-        mask_image_download_url = 'https://github.com/prajnasb/observations/raw/master/mask_classifier/Data_Generator/images/blue-mask.png'
-
-        request = Request(mask_image_download_url)
-        response = urlopen(request)
-        image_data = response.read()
-
-        if not os.path.exists('data'):
-            os.mkdir('data')
-
-        image_file = open('data/mask.png', 'wb')
-        image_file.write(image_data)
-        image_file.close()
-        print('mask 이미지 다운로드 완료')
+# def download_image(kind):
+#     if kind == 'without_mask':
+#         api_url = 'https://api.github.com/repos/prajnasb/observations/contents/experiements/data/without_mask?ref=master'
+#         hds = {'User-Agent': 'Mozilla/5.0'}
+#
+#         request = Request(api_url, headers=hds)
+#         response = urlopen(request)
+#         directory_bytes = response.read()
+#         directory_str = directory_bytes.decode('utf-8')
+#
+#         contents = json.loads(directory_str)
+#
+#         for i in range(len(contents)):
+#             content = contents[i]
+#
+#             request = Request(content['download_url'])
+#             response = urlopen(request)
+#             image_data = response.read()
+#
+#             if not os.path.exists('data'):
+#                 os.mkdir('data')
+#             if not os.path.exists('data/without_mask'):
+#                 os.mkdir('data/without_mask')
+#
+#             image_file = open('data/without_mask/' + content['name'], 'wb')
+#             image_file.write(image_data)
+#             image_file.close()
+#             print('without_mask 이미지 다운로드 중(' + str(i + 1) + '/' + str(len(contents)) + '): ' + content['name'])
+#         print('without_mask 이미지 다운로드 완료')
+#     elif kind == 'with_mask':
+#         api_url = 'https://api.github.com/repos/prajnasb/observations/contents/experiements/data/with_mask?ref=master'
+#         hds = {'User-Agent': 'Mozilla/5.0'}
+#
+#         request = Request(api_url, headers=hds)
+#         response = urlopen(request)
+#         directory_bytes = response.read()
+#         directory_str = directory_bytes.decode('utf-8')
+#
+#         contents = json.loads(directory_str)
+#
+#         for i in range(len(contents)):
+#             content = contents[i]
+#
+#             request = Request(content['download_url'])
+#             response = urlopen(request)
+#             image_data = response.read()
+#
+#             if not os.path.exists('data'):
+#                 os.mkdir('data')
+#             if not os.path.exists('data/with_mask'):
+#                 os.mkdir('data/with_mask')
+#
+#             image_file = open('data/with_mask/' + content['name'], 'wb')
+#             image_file.write(image_data)
+#             image_file.close()
+#             print('with_mask 이미지 다운로드 중(' + str(i + 1) + '/' + str(len(contents)) + '): ' + content['name'])
+#         print('with_mask 이미지 다운로드 완료')
+#     elif kind == 'mask':
+#         mask_image_download_url = 'https://github.com/prajnasb/observations/raw/master/mask_classifier/Data_Generator/images/blue-mask.png'
+#
+#         request = Request(mask_image_download_url)
+#         response = urlopen(request)
+#         image_data = response.read()
+#
+#         if not os.path.exists('data'):
+#             os.mkdir('data')
+#
+#         image_file = open('data/mask.png', 'wb')
+#         image_file.write(image_data)
+#         image_file.close()
+#         print('mask 이미지 다운로드 완료')
 
 
 # 점과 점 사이의 거리
@@ -121,7 +120,6 @@ def mask_processing(face_image_file_name):
     face_image_np = face_recognition.load_image_file(face_image_path)
     face_locations = face_recognition.face_locations(face_image_np)
     face_landmarks = face_recognition.face_landmarks(face_image_np, face_locations)
-
     # 결과 이미지 생성
     face_image = Image.fromarray(face_image_np)
     mask_image = Image.open(mask_image_path)
@@ -220,5 +218,6 @@ def generate_data():
 
 
 if __name__ == '__main__':
+    print(1)
     # download_image('without_mask')
     generate_data()

@@ -2,7 +2,7 @@
 
 import face_recognition
 from PIL import Image, ImageDraw
-
+print(1)
 face_image_path = '../data/without_mask/0.jpg'
 mask_image_path = '../data/mask.png'
 
